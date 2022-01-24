@@ -46,12 +46,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-/* const addProductsToStage = async () => {
-  const products = document.querySelector('.items');
-  products.innerHTML = ''
-  data = await fetchProducts('computador')
-} */
-
 async function init() {
   const data = await fetchProducts('computador');
   const { results } = data;
@@ -61,6 +55,6 @@ async function init() {
   });
 }
 
-window.onload = async () => {
-  await init();
+window.onload = () => {
+  init();
 };
