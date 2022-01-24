@@ -46,7 +46,8 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 const savedCartItems = (() => {
   cartArea.innerHTML = getSavedCartItems();
-
+  const savedItem = document.querySelectorAll('.cart__item');
+  savedItem.forEach((item) => item.addEventListener('click', cartItemClickListener));
 });
 
 // função para adicionar o item ao carrinho
@@ -83,6 +84,7 @@ const addProductsOnScreen = async () => {
 
 window.onload = async () => {
   await addProductsOnScreen();
+  savedCartItems();
   makeButtonAddProduct();
   productsArea.addEventListener('click', buttonClick);
 };
