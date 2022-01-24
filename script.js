@@ -44,12 +44,18 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+const savedCartItems = (() => {
+  cartArea.innerHTML = getSavedCartItems();
+
+});
+
 // função para adicionar o item ao carrinho
 const addSelectedProductToCart = async (prodID) => {
   const finalObjProduct = await fetchItem(prodID);
   const { id: sku, title: name, price: salePrice } = finalObjProduct;
   const createSelectedProduct = createCartItemElement({ sku, name, salePrice });
   cartArea.appendChild(createSelectedProduct);
+  saveCartItems(cartArea.innerHTML);
 };
 
 // estava tendo problemas pra fazer essa lógica funcionar, usei como exemplo o pr do Mario fernando
