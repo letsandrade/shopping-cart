@@ -1,3 +1,6 @@
+const { inherits } = require("mocha/lib/utils");
+const { fetchProducts } = require("./helpers/fetchProducts");
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -40,4 +43,12 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+function init() {
+  const data = fetchProducts();
+  const results = data.results;
+  const elementProduct = createProductItemElement(results[0]);
+  const items = document.querySelector('items');
+  items.appendChild(elementProduct);
+}
+
+window.onload = () => { init() };
