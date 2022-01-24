@@ -1,5 +1,7 @@
-const { inherits } = require("mocha/lib/utils");
-const { fetchProducts } = require("./helpers/fetchProducts");
+const { inherits } = require('mocha/lib/utils');
+
+const { fetchProducts } = require('./helpers/fetchProducts');
+
 const productsArea = document.querySelector('items');
 
 function createProductImageElement(imageSource) {
@@ -56,9 +58,9 @@ async function init() {
   results.forEach(({ id, title, thumbnail }) => {
     const elementProduct = createProductItemElement({ sku: id, name: title, image: thumbnail });
     productsArea.appendChild(elementProduct);
-  })
+  });
 }
 
 window.onload = async () => {
-  await init()
+  await init();
 };
