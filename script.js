@@ -32,7 +32,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  
+  const currProduct = event.target;
+  currProduct.remove(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -43,10 +44,27 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-const addSelectedProductToCart = () => {
-  const buttonAddProduct = document.querySelectorAll('.cart__items');
+// função para adicionar o item ao carrinho
+const addSelectedProductToCart = async (prodID) => {
+  const finalObjProduct = await fetchItem(prodID);
+  const { id: sku, title: name, price: salePrice } = finalObjProduct;
+  const createSelectedProduct = createCartItemElement({ sku, name, salePrice });
+  cartArea.appendChild(createSelectedProduct);
+};
 
-}
+// estava tendo problemas pra fazer essa lógica funcionar, usei como exemplo o pr do Mario fernando
+const buttonClick = (event) => {
+  if (event.target.classList.contains('item__add')) {
+    addSelectedProductToCart(event.target.parentNode.firstElementChild.innerText);
+  }
+};
+
+const makeButtonAddProduct = () => {
+  const addToCartButtons = document.querySelectorAll('.cart__item');
+  addToCartButtons.forEach((button) => {
+    button.addEventListener('click', cartItemClickListener);
+  });
+};
 
 const addProductsOnScreen = async () => {
   const products = await fetchProducts('computador');
@@ -55,8 +73,10 @@ const addProductsOnScreen = async () => {
     const elementProduct = createProductItemElement({ sku: id, name: title, image: thumbnail });
     productsArea.appendChild(elementProduct);
   });
-}
+};
 
 window.onload = async () => {
   await addProductsOnScreen();
+  makeButtonAddProduct();
+  productsArea.addEventListener('click', buttonClick);
 };
