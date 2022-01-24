@@ -1,8 +1,5 @@
-const { inherits } = require('mocha/lib/utils');
-
-const { fetchProducts } = require('./helpers/fetchProducts');
-
-const productsArea = document.querySelector('items');
+const productsArea = document.querySelector('.items');
+const cartArea = document.querySelector('.cart__items');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -35,7 +32,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -46,15 +43,20 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-async function init() {
-  const data = await fetchProducts('computador');
-  const { results } = data;
+const addSelectedProductToCart = () => {
+  const buttonAddProduct = document.querySelectorAll('.cart__items');
+
+}
+
+const addProductsOnScreen = async () => {
+  const products = await fetchProducts('computador');
+  const { results } = products;
   results.forEach(({ id, title, thumbnail }) => {
     const elementProduct = createProductItemElement({ sku: id, name: title, image: thumbnail });
     productsArea.appendChild(elementProduct);
   });
 }
 
-window.onload = () => {
-  init();
+window.onload = async () => {
+  await addProductsOnScreen();
 };
