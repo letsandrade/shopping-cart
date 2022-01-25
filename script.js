@@ -1,5 +1,11 @@
 const productsArea = document.querySelector('.items');
 const cartArea = document.querySelector('.cart__items');
+const completeCart = document.querySelector('.cart');
+const totalCartPrice = document.querySelector('.total-price');
+
+const calculateTotalPrice = () => {
+  
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -44,6 +50,7 @@ const removeLoadingScreen = () => {
 function cartItemClickListener(event) {
   const currProduct = event.target;
   currProduct.remove(event.target);
+  saveCartItems(cartArea.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -54,7 +61,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-const savedCartItems = () => {
+const loadSavedCart = () => {
   const cartItems = getSavedCartItems();
   if (cartItems) {
     cartArea.innerHTML = cartItems;
@@ -86,6 +93,12 @@ const makeButtonAddProduct = () => {
   });
 };
 
+const clearCartButton = document.querySelector('.empty-cart');
+clearCartButton.addEventListener('click', () => {
+  cartArea.innerHTML = null;
+  totalCartPrice.innerText = 0;
+});
+
 const addProductsOnScreen = async () => {
   const products = await fetchProducts('computador');
   const { results } = products;
@@ -99,7 +112,7 @@ const addProductsOnScreen = async () => {
 window.onload = async () => {
   createLoadingScreen();
   await addProductsOnScreen();
-  savedCartItems();
+  loadSavedCart();
   makeButtonAddProduct();
   productsArea.addEventListener('click', buttonClick);
 };
