@@ -1,16 +1,6 @@
 const productsArea = document.querySelector('.items');
 const cartArea = document.querySelector('.cart__items');
-const mainContainer = document.querySelector('.container')
-
-const createLoadingScreen = () => {
-  const loadingDiv = createCustomElement('div', 'loadscreen', 'carregando...');
-  mainContainer.appendChild(loadingDiv);
-};
-
-const removeLoadingScreen = () => {
-  const divLoading = document.querySelector('.loadscreen');
-  divLoading.remove();
-};
+const mainContainer = document.querySelector('.container');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -41,6 +31,16 @@ function createProductItemElement({ sku, name, image }) {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
+
+const createLoadingScreen = () => {
+  const loadingDiv = createCustomElement('div', 'loadscreen', 'carregando...');
+  mainContainer.appendChild(loadingDiv);
+};
+
+const removeLoadingScreen = () => {
+  const divLoading = document.querySelector('.loadscreen');
+  divLoading.remove();
+};
 
 function cartItemClickListener(event) {
   const currProduct = event.target;
