@@ -1,6 +1,5 @@
 const productsArea = document.querySelector('.items');
 const cartArea = document.querySelector('.cart__items');
-const mainContainer = document.querySelector('.container');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -34,7 +33,7 @@ function getSkuFromProductItem(item) {
 
 const createLoadingScreen = () => {
   const loadingDiv = createCustomElement('div', 'loadscreen', 'carregando...');
-  mainContainer.appendChild(loadingDiv);
+  productsArea.appendChild(loadingDiv);
 };
 
 const removeLoadingScreen = () => {
@@ -55,14 +54,14 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-const savedCartItems = (() => {
+const savedCartItems = () => {
   const cartItems = getSavedCartItems();
   if (cartItems) {
     cartArea.innerHTML = cartItems;
     const savedItem = document.querySelectorAll('.cart__item');
     savedItem.forEach((item) => item.addEventListener('click', cartItemClickListener));
   }
-});
+};
 
 // função para adicionar o item ao carrinho
 const addSelectedProductToCart = async (prodID) => {
@@ -88,7 +87,6 @@ const makeButtonAddProduct = () => {
 };
 
 const addProductsOnScreen = async () => {
-  createLoadingScreen();
   const products = await fetchProducts('computador');
   const { results } = products;
   results.forEach(({ id, title, thumbnail }) => {
@@ -99,6 +97,7 @@ const addProductsOnScreen = async () => {
 };
 
 window.onload = async () => {
+  createLoadingScreen();
   await addProductsOnScreen();
   savedCartItems();
   makeButtonAddProduct();
