@@ -1,9 +1,16 @@
 const productsArea = document.querySelector('.items');
 const cartArea = document.querySelector('.cart__items');
+const mainContainer = document.querySelector('.container')
 
-const createLoadingScreen = (() => {
+const createLoadingScreen = () => {
+  const loadingDiv = createCustomElement('div', 'loadscreen', 'carregando...');
+  mainContainer.appendChild(loadingDiv);
+};
 
-});
+const removeLoadingScreen = () => {
+  const divLoading = document.querySelector('.loadscreen');
+  divLoading.remove();
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -81,12 +88,14 @@ const makeButtonAddProduct = () => {
 };
 
 const addProductsOnScreen = async () => {
+  createLoadingScreen();
   const products = await fetchProducts('computador');
   const { results } = products;
   results.forEach(({ id, title, thumbnail }) => {
     const elementProduct = createProductItemElement({ sku: id, name: title, image: thumbnail });
     productsArea.appendChild(elementProduct);
   });
+  removeLoadingScreen();
 };
 
 window.onload = async () => {
