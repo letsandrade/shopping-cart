@@ -1,6 +1,10 @@
 const productsArea = document.querySelector('.items');
 const cartArea = document.querySelector('.cart__items');
 
+const createLoadingScreen = (() => {
+
+});
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -45,9 +49,12 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 const savedCartItems = (() => {
-  cartArea.innerHTML = getSavedCartItems();
-  const savedItem = document.querySelectorAll('.cart__item');
-  savedItem.forEach((item) => item.addEventListener('click', cartItemClickListener));
+  const cartItems = getSavedCartItems();
+  if (cartItems) {
+    cartArea.innerHTML = cartItems;
+    const savedItem = document.querySelectorAll('.cart__item');
+    savedItem.forEach((item) => item.addEventListener('click', cartItemClickListener));
+  }
 });
 
 // função para adicionar o item ao carrinho
